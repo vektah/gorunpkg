@@ -1,10 +1,15 @@
 gorunpkg
 ========
 
-Like go run, but with go builds package resolution.
+Like go run, but instead of running a file it runs a package which can be pinned in vendor.
 
 ### why
-So the cli dependency is under version control per-project, rather than being a random gopath wide executable.
+A few reasons:
+ - you can pin the version you use to generate code using `go dep`
+ - you can have different versions per project
+ - you dont need to install the binary on your path at all
+
+This is particularly nice when committing go generated code so you are in control of when the generator updates.
 
 ### usage example
 
