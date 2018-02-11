@@ -16,7 +16,7 @@ This is particularly nice when committing go generated code so you are in contro
 For example if you were using [campoy/jsonenums](http://github.com/campoy/jsonenums) to generate some code you would
 install gorunpkg on your gopath. This is the only part that needs to be gopath wide and is small enough that it should be stable.
 ```bash
-go get github.com/Vektah/gorunpkg
+go get github.com/vektah/gorunpkg
 ```
 
 add the dep to projects Gopkg.toml:
