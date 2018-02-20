@@ -5,8 +5,8 @@ import (
 	"io"
 	"os"
 	"os/exec"
-	"path"
 	"path/filepath"
+	"runtime"
 	"syscall"
 )
 
@@ -22,7 +22,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	tmpfile := path.Join(os.TempDir(), "gorunpkg_"+filepath.Base(pkg))
+	tmpfile := filepath.Join(os.TempDir(), "gorunpkg_"+filepath.Base(pkg))
+	if runtime.GOOS == "windows" {
+		tmpfile += ".exe"
+	}
 
 	passthrough("go", "build", "-i", "-o", tmpfile, pkg)
 	passthrough(tmpfile, os.Args[2:]...)
@@ -65,6 +68,9 @@ func passthrough(command string, args ...string) {
 		if status, ok := exitErr.Sys().(syscall.WaitStatus); ok {
 			os.Exit(status.ExitStatus())
 		}
+		os.Exit(1)
+	}
+	if err != nil {
 		os.Exit(1)
 	}
 }
