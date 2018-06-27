@@ -27,7 +27,13 @@ func main() {
 		tmpfile += ".exe"
 	}
 
-	passthrough("go", "build", "-i", "-o", tmpfile, pkg)
+	buildOptions := []string{"build", "-i", "-o", tmpfile}
+	if tags := os.Getenv("BUILD_TAGS"); tags != "" {
+		buildOptions = append(buildOptions, "-tags", tags)
+	}
+	buildOptions = append(buildOptions, pkg)
+
+	passthrough("go", buildOptions...)
 	passthrough(tmpfile, os.Args[2:]...)
 }
 
