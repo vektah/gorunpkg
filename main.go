@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -40,27 +39,8 @@ func passthrough(command string, args ...string) {
 		fmt.Println("cwd: " + err.Error())
 		os.Exit(1)
 	}
-
-	stdout, err := cmd.StdoutPipe()
-	if err != nil {
-		fmt.Println("stdout: " + err.Error())
-		os.Exit(1)
-	}
-	defer stdout.Close()
-	stderr, err := cmd.StderrPipe()
-	if err != nil {
-		fmt.Println("stderr: " + err.Error())
-		os.Exit(1)
-	}
-	defer stderr.Close()
-
-	go func() {
-		io.Copy(os.Stdout, stdout)
-	}()
-
-	go func() {
-		io.Copy(os.Stderr, stderr)
-	}()
+	cmd.Stderr = os.Stderr
+	cmd.Stdout = os.Stdout
 
 	err = cmd.Run()
 
