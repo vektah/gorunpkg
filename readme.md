@@ -1,3 +1,5 @@
+**ARCHIVED**: This is now the default behaviour of go run with go version 1.11+
+
 # gorunpkg
 
 Like go run, but instead of running a file it runs a package which can be pinned in vendor.
