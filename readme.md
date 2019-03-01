@@ -58,3 +58,10 @@ then go generate:
 ```bash
 go generate ./...
 ```
+
+You can enable build tags by setting the `BUILD_TAGS` environment variable.
+The following is a `go:generate` example with the `golang-migrate/migrate` library:
+
+```go
+//go:generate bash -c "BUILD_TAGS=postgres gorunpkg github.com/golang-migrate/migrate/cli --help"
+```
